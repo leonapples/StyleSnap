@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { WardrobeTab, TodayTab, MemoriesTab } from './tabs';
+import { TabBar } from './components/TabBar'
 
 export default function App() {
+
+  const Tab = createBottomTabNavigator();
+
+  const renderTabBar = (props: BottomTabBarProps) => {
+    return <TabBar {...props}/>;  
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName="TodayTab"
+          tabBar={renderTabBar}
+          screenOptions={{ headerShown: false }}
+        >
+          <Tab.Screen name="WardrobeTab" component={WardrobeTab} />
+          <Tab.Screen name="TodayTab" component={TodayTab} />
+          <Tab.Screen name="MemoriesTab" component={MemoriesTab} />        
+        </Tab.Navigator>
+      </NavigationContainer>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#F1DEC9',
+    height: '100%',
+    width: '100%'
   },
 });
