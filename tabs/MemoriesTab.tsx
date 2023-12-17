@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F1DEC9',
     alignItems: 'center',
-    paddingTop: 65
+    paddingTop: 70
   },
   text: {
     width: 239,
