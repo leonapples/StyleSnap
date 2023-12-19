@@ -1,6 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function WardrobePage() {
+export default function WardrobePage(props: { navigation: any; }) {
+  const {
+    navigation
+  } = props;
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Your Wardrobe</Text>

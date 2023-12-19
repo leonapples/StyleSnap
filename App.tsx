@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LoadingScreen } from './pages';
 import { default as AppRoot } from './AppRoot';

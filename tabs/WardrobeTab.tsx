@@ -1,29 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { WardrobePage } from '../pages';
+
+const Stack = createStackNavigator();
 
 export default function WardrobeTab() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Your Wardrobe</Text>
-    </View>
+    <Stack.Navigator
+      initialRouteName='WardrobePage'
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <Stack.Screen name="WardrobePage" component={WardrobePage} />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F1DEC9',
-    alignItems: 'center',
-    paddingTop: 70
-  },
-  text: {
-    width: 239,
-    height: 96, 
-    textAlign: 'center', 
-    color: '#8D7B68', 
-    fontSize: 35, 
-    fontWeight: '300', 
-    textTransform: 'uppercase', 
-    lineHeight: 40,
-    letterSpacing: 7
-  }
-});

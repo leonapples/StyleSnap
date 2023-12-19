@@ -1,6 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function MemoriesPage() {
+export default function MemoriesPage(props: { navigation: any; }) {
+  const {
+    navigation
+  } = props;
+  
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Daily Memories</Text>
