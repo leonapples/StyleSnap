@@ -17,7 +17,7 @@ export default function TabBar(props: BottomTabBarProps) {
   return (
     <View>
       <TouchableOpacity style={styles.left} 
-        activeOpacity={0.9}
+        activeOpacity={1}
         onPress={() => onPress("WardrobeTab")}
       >
         <Icon
@@ -29,7 +29,7 @@ export default function TabBar(props: BottomTabBarProps) {
         />
       </TouchableOpacity>
       <TouchableOpacity style={styles.right}
-        activeOpacity={0.9}
+        activeOpacity={1}
         onPress={() => onPress("MemoriesTab")}
       >
         <Icon
@@ -41,7 +41,7 @@ export default function TabBar(props: BottomTabBarProps) {
         />
       </TouchableOpacity>
       <TouchableOpacity style={styles.center}
-        activeOpacity={0.9}
+        activeOpacity={1}
         onPress={() => onPress("TodayTab")}
       >
         <Icon
@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
     marginBottom: -10
   },
   iconLeft: {
-    top: 17,
-    right: 28
+    top: 18,
+    right: '15%'
   },
   iconRight: {
-    top: 17,
-    left: 28
+    top: 18,
+    left: '15%'
   },
   iconCenter: {
     top: 15

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function MemoriesTab() {
-   return (
+  return (
     <View style={styles.container}>
       <Text style={styles.text}>Daily Memories</Text>
     </View>
