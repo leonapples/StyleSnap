@@ -1,16 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { WardrobeGrid } from '../components';
+import GridItem from './GridItem';
+import AddItem from './AddItem';
 
-export default function WardrobePage(props: { navigation: any; }) {
-  const {
-    navigation
-  } = props;
-
+export default function WardrobeGrid() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Your Wardrobe</Text>
-      <WardrobeGrid />
-    </View>
+    <>
+      <GridItem />
+      <AddItem />
+    </>
   );
 }
 
