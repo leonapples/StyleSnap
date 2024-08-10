@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { TodayPage } from '../pages';
+import TodayPage from '../pages/TodayPage';
 
 const Stack = createStackNavigator();
 
-export default function TodayTab() {
+const TodayTab = () => {
   return (
     <Stack.Navigator
       initialRouteName='TodayPage'
@@ -16,3 +16,5 @@ export default function TodayTab() {
     </Stack.Navigator>
   );
 }
+
+export default memo(TodayTab);

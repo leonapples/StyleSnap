@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import Svg, { Rect, Path } from 'react-native-svg';
+import Svg, { Rect } from 'react-native-svg';
 
 export default function AddItem(props: any) {
   const {

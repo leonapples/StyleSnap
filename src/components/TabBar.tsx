@@ -1,8 +1,10 @@
+import React, { memo } from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'react-native-elements'
+import { colors } from '../utils/constants';
 
-export default function TabBar(props: BottomTabBarProps) {
+const TabBar = (props: BottomTabBarProps) => {
   const {
     state,
     navigation
@@ -10,45 +12,41 @@ export default function TabBar(props: BottomTabBarProps) {
 
   const currentTab = state.routes[state.index].name;
 
-  const onPress = (route: any) => {
-    navigation.navigate(route);
-  }
-
   return (
     <View>
       <TouchableOpacity style={styles.left} 
         activeOpacity={1}
-        onPress={() => onPress("WardrobeTab")}
+        onPress={() => navigation.navigate("WardrobeTab")}
       >
         <Icon
           name='checkroom'
           type='material'
           size={35}
-          color={currentTab === "WardrobeTab" ? '#A4907C' : '#F1DEC9'}
+          color={currentTab === "WardrobeTab" ? colors.accent : colors.background}
           containerStyle={styles.iconLeft}
         />
       </TouchableOpacity>
       <TouchableOpacity style={styles.right}
         activeOpacity={1}
-        onPress={() => onPress("MemoriesTab")}
+        onPress={() => navigation.navigate("MemoriesTab")}
       >
         <Icon
           name='today'
           type='material'
           size={35}
-          color={currentTab === "MemoriesTab" ? '#A4907C' : '#F1DEC9'}
+          color={currentTab === "MemoriesTab" ? colors.accent : colors.background}
           containerStyle={styles.iconRight}
         />
       </TouchableOpacity>
       <TouchableOpacity style={styles.center}
         activeOpacity={1}
-        onPress={() => onPress("TodayTab")}
+        onPress={() => navigation.navigate("TodayTab")}
       >
         <Icon
           name='add'
           type='material'
           size={60}
-          color={currentTab === "TodayTab" ? '#8D7B68' : '#F1DEC9'}
+          color={currentTab === "TodayTab" ? colors.foreground : colors.background}
           containerStyle={styles.iconCenter}
         />
       </TouchableOpacity>
@@ -58,29 +56,29 @@ export default function TabBar(props: BottomTabBarProps) {
 
 const styles = StyleSheet.create({
   left: {
-    backgroundColor: '#8D7B68',
+    backgroundColor: colors.foreground,
     height: 75,
     position: 'absolute',
     width: '50%',
     left: 0,
     bottom: 0
   },
-  right: {
-    backgroundColor: '#8D7B68',
-    height: 75,
-    position: 'absolute',
-    width: '50%',
-    right: 0,
-    bottom: 0
-  },
   center: {
-    backgroundColor: '#A4907C',
+    backgroundColor: colors.accent,
     borderRadius: 60,
     height: 100,
     width: '35%',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: -10
+  },
+  right: {
+    backgroundColor: colors.foreground,
+    height: 75,
+    position: 'absolute',
+    width: '50%',
+    right: 0,
+    bottom: 0
   },
   iconLeft: {
     top: 18,
@@ -94,3 +92,5 @@ const styles = StyleSheet.create({
     top: 15
   }
 });
+
+export default memo(TabBar);

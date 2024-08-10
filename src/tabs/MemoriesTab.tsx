@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MemoriesPage } from '../pages';
+import MemoriesPage from '../pages/MemoriesPage';
 
 const Stack = createStackNavigator();
 
-export default function MemoriesTab() {
+const MemoriesTab = () => {
   return (
     <Stack.Navigator
       initialRouteName='MemoriesPage'
@@ -16,3 +16,5 @@ export default function MemoriesTab() {
     </Stack.Navigator>
   );
 }
+
+export default memo(MemoriesTab);

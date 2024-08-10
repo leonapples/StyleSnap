@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { WardrobePage } from '../pages';
+import WardrobePage from '../pages/WardrobePage';
 
 const Stack = createStackNavigator();
 
-export default function WardrobeTab() {
+const WardrobeTab = () => {
   return (
     <Stack.Navigator
       initialRouteName='WardrobePage'
@@ -17,3 +17,4 @@ export default function WardrobeTab() {
   );
 }
 
+export default memo(WardrobeTab);
