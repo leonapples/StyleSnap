@@ -1,9 +1,9 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GridItem from './GridItem';
 import AddItem from './AddItem';
-import { addItem, getItems } from '../../utils/database';
+import { useData } from '../DataProvider';
 import { colors } from '../../utils/constants';
 
 const WardrobeGrid = (props: any) => {
@@ -11,15 +11,7 @@ const WardrobeGrid = (props: any) => {
     navigation,
   } = props;
 
-  const [items, setItems] = useState([]);
-  console.log('Items', items);
-
-  useEffect(() => {
-    const initialize = async () => {
-      setItems(await getItems());
-    };
-    initialize();
-  }, []);
+  const { items } = useData();
   
   const content = items.map((item: any) => <GridItem key={item.id} item={item} navigation={navigation} />);
 
@@ -34,7 +26,7 @@ const WardrobeGrid = (props: any) => {
         style={styles.scroll}
       >
         <View style={styles.container}>
-          <AddItem />
+          <AddItem navigation={navigation}/>
           {content}
         </View>
       </ScrollView>
@@ -45,6 +37,7 @@ const WardrobeGrid = (props: any) => {
 const styles = StyleSheet.create({
   wrapper: {
     marginTop: -20,
+    width: '100%',
   },
   container: {
     flex: 1,

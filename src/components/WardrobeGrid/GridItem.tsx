@@ -13,7 +13,7 @@ const GridItem = (props: any) => {
       <TouchableOpacity 
         activeOpacity={1}
         style={styles.square}
-        onPress={() => console.log('Inspect Item', item)}
+        onPress={() => navigation.navigate('ItemDetailsPage', { item, newItem: false })}
       >
         <Image 
           source={{

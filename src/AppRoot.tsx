@@ -6,6 +6,7 @@ import WardrobeTab from './tabs/WardrobeTab';
 import TodayTab from './tabs/TodayTab';
 import MemoriesTab from './tabs/MemoriesTab';
 import TabBar from './components/TabBar';
+import DataProvider from './components/DataProvider'
 import Animated, { FadeIn } from "react-native-reanimated";
 import { colors } from './utils/constants';
 
@@ -17,17 +18,19 @@ const AppRoot = () => {
       style={styles.animated}
       entering={FadeIn.duration(1000)}
     >
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="TodayTab"
-          tabBar={(props) => <TabBar {...props} />}
-          screenOptions={{ headerShown: false }}
-        >
-          <Tab.Screen name="WardrobeTab" component={WardrobeTab} />
-          <Tab.Screen name="TodayTab" component={TodayTab} />
-          <Tab.Screen name="MemoriesTab" component={MemoriesTab} />        
-        </Tab.Navigator>
-      </NavigationContainer>
+      <DataProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="TodayTab"
+            tabBar={(props) => <TabBar {...props} />}
+            screenOptions={{ headerShown: false }}
+          >
+            <Tab.Screen name="WardrobeTab" component={WardrobeTab} />
+            <Tab.Screen name="TodayTab" component={TodayTab} />
+            <Tab.Screen name="MemoriesTab" component={MemoriesTab} />        
+          </Tab.Navigator>
+        </NavigationContainer>
+      </DataProvider>
     </Animated.View>
   );
 }

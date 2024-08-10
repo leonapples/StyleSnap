@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { colors } from '../utils/constants';
 
-const Header = (props: any) => {
+const MainHeader = (props: any) => {
   const {
     text
   } = props;
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase', 
     lineHeight: 40,
     letterSpacing: 7
-  }
+  },
 });
 
-export default memo(Header);
+export default memo(MainHeader);
