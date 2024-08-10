@@ -1,15 +1,17 @@
+import React, { memo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { colors } from '../../utils/constants';
 
-export default function GridItem(props: any) {
+const GridItem = (props: any) => {
   const {
     item,
     navigation,
   } = props;
 
   return (
-    <>
+    <View style={styles.container}>
       <TouchableOpacity 
-        activeOpacity={0.7}
+        activeOpacity={1}
         style={styles.square}
         onPress={() => console.log('Inspect Item')}
       >
@@ -24,30 +26,38 @@ export default function GridItem(props: any) {
         style={styles.text}
         numberOfLines={1}
       >
-        Item Name Item Name Item Name Item Name Item Name
+        Item Name
       </Text>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: '38%',
+    marginBottom: 8,
+    alignItems: 'center',
+  },
   image: {
-
+    width: '85%',
+    height: '85%',
+    borderRadius: 10,
   },
   text: {
-    width: "40%",
-    textAlign: 'center', 
-    color: '#8D7B68', 
+    color: colors.foreground, 
     fontSize: 16, 
     fontWeight: '600', 
     textTransform: 'uppercase', 
     lineHeight: 40,
   },
   square: {
-    backgroundColor: "#C8B6A6",
+    backgroundColor: colors.midground,
     borderRadius: 20,
-    height: 0,
-    width: '35%',
-    paddingTop: '35%'
+    width: '100%',
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
+
+export default memo(GridItem);

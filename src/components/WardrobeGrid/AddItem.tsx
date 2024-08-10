@@ -7,7 +7,7 @@ export default function AddItem(props: any) {
   } = props;
 
   return (
-    <>
+    <View style={styles.container}>
       <View style={styles.square}>
         <Svg onPress={() => console.log("Add Item!")} width="100%" height="100%" viewBox="0 0 150 150" fill="none">
           <Rect x="0.5" y="0.5" width="149" height="149" rx="19.5" fill="#C8B6A6"/>
@@ -24,13 +24,17 @@ export default function AddItem(props: any) {
       >
         Add Item
       </Text>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: '38%',
+    marginBottom: 8,
+    alignItems: 'center',
+  },
   text: {
-    width: "40%",
     textAlign: 'center', 
     color: '#8D7B68', 
     fontSize: 16, 
@@ -40,7 +44,7 @@ const styles = StyleSheet.create({
   },
   square: {
     borderRadius: 20,
-    width: '35%',
+    width: '100%',
     aspectRatio: 1
   }
 });

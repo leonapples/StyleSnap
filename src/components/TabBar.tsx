@@ -13,7 +13,7 @@ const TabBar = (props: BottomTabBarProps) => {
   const currentTab = state.routes[state.index].name;
 
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.left} 
         activeOpacity={1}
         onPress={() => navigation.navigate("WardrobeTab")}
@@ -55,6 +55,10 @@ const TabBar = (props: BottomTabBarProps) => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   left: {
     backgroundColor: colors.foreground,
     height: 75,
@@ -67,10 +71,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accent,
     borderRadius: 60,
     height: 100,
+    position: 'absolute',
     width: '35%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: -10
+    bottom: -10,
   },
   right: {
     backgroundColor: colors.foreground,

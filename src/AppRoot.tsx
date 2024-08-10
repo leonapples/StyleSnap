@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   animated: {
     flex: 1,
     backgroundColor: colors.background,
-  }
+  },
 });
 
 export default AppRoot;
