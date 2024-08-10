@@ -1,15 +1,28 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GridItem from './GridItem';
 import AddItem from './AddItem';
+import { addItem, getItems } from '../../utils/database';
 import { colors } from '../../utils/constants';
 
 const WardrobeGrid = (props: any) => {
   const {
-    items
+    navigation,
   } = props;
+
+  const [items, setItems] = useState([]);
+  console.log('Items', items);
+
+  useEffect(() => {
+    const initialize = async () => {
+      setItems(await getItems());
+    };
+    initialize();
+  }, []);
   
+  const content = items.map((item: any) => <GridItem key={item.id} item={item} navigation={navigation} />);
+
   return (
     <View style={styles.wrapper}>
       <LinearGradient
@@ -22,13 +35,7 @@ const WardrobeGrid = (props: any) => {
       >
         <View style={styles.container}>
           <AddItem />
-          <GridItem />
-          <GridItem />
-          <GridItem />
-          <GridItem />
-          <GridItem />
-          <GridItem />
-          <GridItem />
+          {content}
         </View>
       </ScrollView>
     </View>

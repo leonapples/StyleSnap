@@ -13,7 +13,7 @@ const GridItem = (props: any) => {
       <TouchableOpacity 
         activeOpacity={1}
         style={styles.square}
-        onPress={() => console.log('Inspect Item')}
+        onPress={() => console.log('Inspect Item', item)}
       >
         <Image 
           source={{
@@ -26,7 +26,7 @@ const GridItem = (props: any) => {
         style={styles.text}
         numberOfLines={1}
       >
-        Item Name
+        {item.name}
       </Text>
     </View>
   );
