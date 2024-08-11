@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { colors } from '../utils/constants';
 
 const PageContainer = (props: any) => {
@@ -18,9 +18,13 @@ const PageContainer = (props: any) => {
   });
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior="padding"
+      keyboardVerticalOffset={0}
+    >
       {children}
-    </View>
+    </KeyboardAvoidingView>
   )
 };
 

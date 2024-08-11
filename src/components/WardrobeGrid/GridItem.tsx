@@ -47,7 +47,7 @@ const GridItem = (props: any) => {
       >
         <Image 
           source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png'
+            uri: item.imageUrl,
           }}
           style={styles.image}
         />

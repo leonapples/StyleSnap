@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, ScrollView, Text } from 'react-native';
 import PopUpHeader from '../components/PopUpHeader';
 import PageContainer from '../components/PageContainer';
 import InputField from '../components/InputField';
+import Picture from '../components/Picture';
 import { useData } from '../components/DataProvider';
 import { colors } from '../utils/constants';
 
@@ -17,19 +18,20 @@ const ItemDetailsPage = (props: any) => {
   const [itemLocal, setItemLocal] = useState(route.params?.item);
   const newItem = route.params?.newItem;
 
-  const onChangeText = (name: any, value: any) => {
+  const onChange = (name: any, value: any) => {
     setItemLocal({ ...itemLocal, [name]: value });
   };
 
   return (
     <PageContainer paddingTop={20}>
-      <PopUpHeader navigation={navigation} value={itemLocal?.name} onChangeText={(value: any) => onChangeText("name", value)} />
-      <ScrollView style={styles.scroll}>
-        <InputField value={itemLocal?.brand} onChangeText={(value: any) => onChangeText("brand", value)} fieldName="Brand"/>
-        <InputField value={itemLocal?.price} onChangeText={(value: any) => onChangeText("price", value)} fieldName="Price"/>
-        <InputField height={200} multiline={true} value={itemLocal?.notes} onChangeText={(value: any) => onChangeText("notes", value)} fieldName="Notes"/>
+      <PopUpHeader itemId={itemLocal?.id} navigation={navigation} value={itemLocal?.name} onChangeText={(value: any) => onChange("name", value)} />
+      <ScrollView contentContainerStyle={styles.scrollContent} style={styles.scroll}>
+        <Picture picture={itemLocal?.imageUrl} setPicture={(value: any) => onChange("imageUrl", value)}/>
+        <InputField value={itemLocal?.brand} onChangeText={(value: any) => onChange("brand", value)} fieldName="Brand"/>
+        <InputField value={itemLocal?.price} onChangeText={(value: any) => onChange("price", value)} fieldName="Price"/>
+        <InputField height={200} multiline={true} value={itemLocal?.notes} onChangeText={(value: any) => onChange("notes", value)} fieldName="Notes"/>
       </ScrollView>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
         onPress={() => {
@@ -49,6 +51,9 @@ const styles = StyleSheet.create({
   scroll: {
     width: '100%',
   },
+  scrollContent: {
+    paddingBottom: 200,
+  },
   button: {
     backgroundColor: colors.accent,
     borderRadius: 60,
@@ -60,7 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    width: '60%',
+    width: 250,
     textAlign: 'center', 
     color: colors.background, 
     fontSize: 30, 

@@ -56,7 +56,14 @@ const DataProvider = (props: any) => {
     await syncItems();
   };
 
-  const deleteItem = async () => {
+  const deleteItem = async (itemId: string) => {
+    try {
+      await db.runAsync(
+        'DELETE FROM items WHERE id = ?', [itemId],
+      );
+    } catch (error) {
+      console.log(error);
+    }
     await syncItems();
   };
 

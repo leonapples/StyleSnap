@@ -13,6 +13,7 @@ const InputField = (props: any) => {
 
   const styles = StyleSheet.create({
     container: {
+      flex: 1,
       width: '100%',
       justifyContent: 'flex-start',
       marginTop: 16,
@@ -41,6 +42,7 @@ const InputField = (props: any) => {
       marginTop: -12,
       paddingTop: multiline ? 20 : 0,
       paddingLeft: 20,
+      paddingRight: 20,
     },
   });
   
