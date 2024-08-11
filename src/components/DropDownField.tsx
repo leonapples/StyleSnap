@@ -19,12 +19,12 @@ const InputField = (props: any) => {
     },
     text: {
       width: '100%',
-      height: 30, 
+      height: 28, 
       color: colors.foreground, 
       fontSize: 24, 
       fontWeight: '400', 
       textAlign: 'left',
-      marginLeft: '8%',
+      marginLeft: 40,
       textTransform: 'uppercase', 
       lineHeight: 40,
       letterSpacing: 7,
@@ -33,7 +33,7 @@ const InputField = (props: any) => {
     input: {
       backgroundColor: colors.midground, 
       color: colors.foreground, 
-      fontSize: 20, 
+      fontSize: 24, 
       alignSelf: 'center',
       width: '90%',
       height: height || 50, 

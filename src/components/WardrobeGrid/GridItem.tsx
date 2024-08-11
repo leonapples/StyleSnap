@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
 import { colors } from '../../utils/constants';
 
 const GridItem = (props: any) => {
@@ -7,6 +7,36 @@ const GridItem = (props: any) => {
     item,
     navigation,
   } = props;
+
+  const { width } = Dimensions.get('window');
+
+  const styles = StyleSheet.create({
+    container: {
+      width: '38%',
+      marginBottom: 8,
+      alignItems: 'center',
+    },
+    image: {
+      width: '85%',
+      height: '85%',
+      borderRadius: 10,
+    },
+    text: {
+      color: colors.foreground, 
+      fontSize: 16, 
+      fontWeight: '600', 
+      textTransform: 'uppercase', 
+      lineHeight: 40,
+    },
+    square: {
+      backgroundColor: colors.midground,
+      borderRadius: 0.05 * width,
+      width: '100%',
+      aspectRatio: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -26,38 +56,10 @@ const GridItem = (props: any) => {
         style={styles.text}
         numberOfLines={1}
       >
-        {item.name}
+        {item.name || '<NO NAME>'}
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '38%',
-    marginBottom: 8,
-    alignItems: 'center',
-  },
-  image: {
-    width: '85%',
-    height: '85%',
-    borderRadius: 10,
-  },
-  text: {
-    color: colors.foreground, 
-    fontSize: 16, 
-    fontWeight: '600', 
-    textTransform: 'uppercase', 
-    lineHeight: 40,
-  },
-  square: {
-    backgroundColor: colors.midground,
-    borderRadius: 20,
-    width: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-});
 
 export default memo(GridItem);

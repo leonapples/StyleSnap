@@ -26,8 +26,8 @@ const ItemDetailsPage = (props: any) => {
       <PopUpHeader navigation={navigation} value={itemLocal?.name} onChangeText={(value: any) => onChangeText("name", value)} />
       <ScrollView style={styles.scroll}>
         <InputField value={itemLocal?.brand} onChangeText={(value: any) => onChangeText("brand", value)} fieldName="Brand"/>
-        <InputField value={itemLocal?.color} onChangeText={(value: any) => onChangeText("color", value)} fieldName="Color"/>
-        <InputField value={itemLocal?.notes} onChangeText={(value: any) => onChangeText("notes", value)} fieldName="Notes"/>
+        <InputField value={itemLocal?.price} onChangeText={(value: any) => onChangeText("price", value)} fieldName="Price"/>
+        <InputField height={200} multiline={true} value={itemLocal?.notes} onChangeText={(value: any) => onChangeText("notes", value)} fieldName="Notes"/>
       </ScrollView>
       <TouchableOpacity 
         style={styles.button}
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    width: 239,
+    width: '60%',
     textAlign: 'center', 
     color: colors.background, 
     fontSize: 30, 

@@ -19,7 +19,7 @@ const DataProvider = (props: any) => {
   const setUpDB = async () => {
     try {
       await db.runAsync(
-        'CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, imageUrl TEXT, type TEXT, brand TEXT, color TEXT, season TEXT, notes TEXT);'
+        'CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, imageUrl TEXT, price TEXT, brand TEXT, notes TEXT);'
       );
     } catch (error) {
       console.log(error);
@@ -40,16 +40,15 @@ const DataProvider = (props: any) => {
 	  const {
 	  	name,
 	  	imageUrl,
-	  	type,
+	  	price,
 	  	brand,
-	  	color,
-	  	season,
 	  	notes
 	  } = item || {};
 
+    // console.log('addItem');
     try {
       await db.runAsync(
-        'INSERT INTO items (name, imageUrl, type, brand, color, season, notes) values (?, ?, ?, ?, ?, ?, ?)', [name, imageUrl, type, brand, color, season, notes],
+        'INSERT INTO items (name, imageUrl, brand, price, notes) values (?, ?, ?, ?, ?)', [name, imageUrl, brand, price, notes],
       );
     } catch (error) {
       console.log(error);
@@ -66,16 +65,14 @@ const DataProvider = (props: any) => {
       id,
 	  	name,
 	  	imageUrl,
-	  	type,
+	  	price,
 	  	brand,
-	  	color,
-	  	season,
 	  	notes
 	  } = item || {};
 
     try {
       await db.runAsync(
-        'UPDATE items SET name = ?, imageUrl = ?, type = ?, brand = ?, color = ?, season = ?, notes = ? WHERE id = ?', [name, imageUrl, type, brand, color, season, notes, id],
+        'UPDATE items SET name = ?, imageUrl = ?, price = ?, brand = ?, notes = ? WHERE id = ?', [name, imageUrl, price, brand, notes, id],
       );
     } catch (error) {
       console.log(error);

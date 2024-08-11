@@ -36,7 +36,7 @@ const WardrobeGrid = (props: any) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: -20,
+    marginTop: -15,
     width: '100%',
   },
   container: {
