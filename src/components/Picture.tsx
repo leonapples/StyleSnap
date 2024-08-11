@@ -1,7 +1,6 @@
 import React, { memo, useRef, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import { CameraView } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
+import { CameraView, Camera } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 import { Icon } from 'react-native-elements'
 import { colors } from '../utils/constants';
@@ -13,6 +12,7 @@ const Picture = (props: any) => {
   } = props;
 
   const cameraRef = useRef<any>(null);
+  const [front, setFront] = useState(false);
 
   const takePic = async () => {
     if (cameraRef.current) {
@@ -35,29 +35,42 @@ const Picture = (props: any) => {
       <View style={styles.cameraContainer}>
         {picture ? 
           <Image source={{ uri: picture }} style={styles.camera} /> : 
-          <CameraView style={styles.camera} ref={cameraRef} /> 
+          <CameraView style={styles.camera} facing={front ? 'front' : 'back'} ref={cameraRef} /> 
         }
       </View>
-      <TouchableOpacity
-        onPress={takePic}
-      >
-        {picture ? 
+      <View style={styles.buttons}>
+        { !picture && <TouchableOpacity
+          onPress={() => setFront(!front)}
+        >
           <Icon
-            name='replay'
+            name='cameraswitch'
             type='material'
             size={35}
             color={colors.accent}
             style={styles.icon}
-          /> :
-          <Icon
-            name='camera'
-            type='font-awesome'
-            size={35}
-            color={colors.accent}
-            style={styles.icon}
           />
-        }
-      </TouchableOpacity>
+        </TouchableOpacity> }
+        <TouchableOpacity
+          onPress={picture ? () => setPicture(null) : takePic}
+        >
+          {picture ? 
+            <Icon
+              name='replay'
+              type='material'
+              size={35}
+              color={colors.accent}
+              style={styles.icon}
+            /> :
+            <Icon
+              name='camera'
+              type='font-awesome'
+              size={35}
+              color={colors.accent}
+              style={styles.icon}
+            />
+          }
+        </TouchableOpacity>
+      </View>
     </View>
   )
 };
@@ -76,6 +89,11 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
+  },
+  buttons: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
   icon: {
     marginTop: 15,

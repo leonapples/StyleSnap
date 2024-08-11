@@ -16,6 +16,7 @@ const ItemDetailsPage = (props: any) => {
   const { addItem, updateItem } = useData();
 
   const [itemLocal, setItemLocal] = useState(route.params?.item);
+  console.log(itemLocal);
   const newItem = route.params?.newItem;
 
   const onChange = (name: any, value: any) => {

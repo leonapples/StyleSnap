@@ -8,6 +8,8 @@ const GridItem = (props: any) => {
     navigation,
   } = props;
 
+  console.log('GridItem', item);
+
   const { width } = Dimensions.get('window');
 
   const styles = StyleSheet.create({
@@ -45,12 +47,13 @@ const GridItem = (props: any) => {
         style={styles.square}
         onPress={() => navigation.navigate('ItemDetailsPage', { item, newItem: false })}
       >
-        <Image 
+        {item.imageUrl ? <Image 
           source={{
-            uri: item.imageUrl,
+            uri: item.imageUrl
           }}
           style={styles.image}
-        />
+        /> :
+        <Text style={styles.text}>NO IMAGE</Text>}
       </TouchableOpacity>
       <Text 
         style={styles.text}
