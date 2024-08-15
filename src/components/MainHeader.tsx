@@ -13,7 +13,7 @@ const MainHeader = (props: any) => {
 const styles = StyleSheet.create({
   text: {
     width: 239,
-    height: 96, 
+    height: 75, 
     textAlign: 'center', 
     color: colors.foreground, 
     fontSize: 35, 
