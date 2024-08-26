@@ -3,13 +3,13 @@ import Svg, { Rect } from 'react-native-svg';
 
 export default function AddItem(props: any) {
   const {
-    navigation
+    onPress,
   } = props;
 
   return (
     <View style={styles.container}>
       <View style={styles.square}>
-        <Svg onPress={() => navigation.navigate('ItemDetailsPage', { newItem: true })} width="100%" height="100%" viewBox="0 0 150 150" fill="none">
+        <Svg onPress={onPress} width="100%" height="100%" viewBox="0 0 150 150" fill="none">
           <Rect x="0.5" y="0.5" width="149" height="149" rx="19.5" fill="#C8B6A6"/>
           <Rect x="0.5" y="0.5" width="149" height="149" rx="19.5" stroke="#C8B6A6"/>
           <Rect x="12.5" y="11.5" width="125" height="127" rx="9.5" fill="#A4907C"/>

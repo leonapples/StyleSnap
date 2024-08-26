@@ -2,13 +2,13 @@ import React, { memo } from 'react';
 import { StyleSheet, TextInput, Alert } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { useData } from './DataProvider';
+import * as FileSystem from 'expo-file-system';
 import { colors } from '../utils/constants';
 
-const PopUpHeader = (props: any) => {
+const ItemPopUpHeader = (props: any) => {
   const {
-    itemId,
+    item,
     navigation,
-    value,
     onChangeText,
   } = props;
 
@@ -25,8 +25,9 @@ const PopUpHeader = (props: any) => {
         },
         {
           text: 'Delete',
-          onPress: () => {
-            deleteItem(itemId);
+          onPress: async () => {
+            await FileSystem.deleteAsync(item.imageUrl);
+            await deleteItem(item.id);
             navigation.goBack();
           },
           style: 'destructive',
@@ -48,7 +49,7 @@ const PopUpHeader = (props: any) => {
       />
       <TextInput
         style={styles.textInput}
-        value={value}
+        value={item?.name}
         onChangeText={onChangeText}
         placeholder="NEW ITEM"
       /> 
@@ -88,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(PopUpHeader);
+export default memo(ItemPopUpHeader);

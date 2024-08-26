@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Text } from 'react-native';
-import PopUpHeader from '../components/PopUpHeader';
+import ItemPopUpHeader from '../components/ItemPopUpHeader';
 import PageContainer from '../components/PageContainer';
 import InputField from '../components/InputField';
 import Picture from '../components/Picture';
@@ -16,7 +16,6 @@ const ItemDetailsPage = (props: any) => {
   const { addItem, updateItem } = useData();
 
   const [itemLocal, setItemLocal] = useState(route.params?.item);
-  console.log(itemLocal);
   const newItem = route.params?.newItem;
 
   const onChange = (name: any, value: any) => {
@@ -25,7 +24,7 @@ const ItemDetailsPage = (props: any) => {
 
   return (
     <PageContainer paddingTop={20}>
-      <PopUpHeader itemId={itemLocal?.id} navigation={navigation} value={itemLocal?.name} onChangeText={(value: any) => onChange("name", value)} />
+      <ItemPopUpHeader item={itemLocal} navigation={navigation} onChangeText={(value: any) => onChange("name", value)} />
       <ScrollView contentContainerStyle={styles.scrollContent} style={styles.scroll}>
         <Picture picture={itemLocal?.imageUrl} setPicture={(value: any) => onChange("imageUrl", value)}/>
         <InputField value={itemLocal?.brand} onChangeText={(value: any) => onChange("brand", value)} fieldName="Brand"/>

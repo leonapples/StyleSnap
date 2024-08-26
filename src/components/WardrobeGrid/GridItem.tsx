@@ -5,10 +5,10 @@ import { colors } from '../../utils/constants';
 const GridItem = (props: any) => {
   const {
     item,
-    navigation,
+    onPress,
   } = props;
 
-  console.log('GridItem', item);
+  // console.log('GridItem', item);
 
   const { width } = Dimensions.get('window');
 
@@ -45,7 +45,7 @@ const GridItem = (props: any) => {
       <TouchableOpacity 
         activeOpacity={1}
         style={styles.square}
-        onPress={() => navigation.navigate('ItemDetailsPage', { item, newItem: false })}
+        onPress={onPress}
       >
         {item.imageUrl ? <Image 
           source={{

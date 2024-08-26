@@ -30,6 +30,11 @@ const Picture = (props: any) => {
     }
   }
 
+  const deletePic = async () => {
+    await FileSystem.deleteAsync(picture);
+    setPicture(null);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.cameraContainer}>
@@ -51,7 +56,7 @@ const Picture = (props: any) => {
           />
         </TouchableOpacity> }
         <TouchableOpacity
-          onPress={picture ? () => setPicture(null) : takePic}
+          onPress={picture ? deletePic : takePic}
         >
           {picture ? 
             <Icon

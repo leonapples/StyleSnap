@@ -8,12 +8,14 @@ import { colors } from '../../utils/constants';
 
 const WardrobeGrid = (props: any) => {
   const {
-    navigation,
+    addItem = true,
+    onPressItem,
+    onPressAddItem,
   } = props;
 
   const { items } = useData();
   
-  const content = items.map((item: any) => <GridItem key={item.id} item={item} navigation={navigation} />);
+  const content = items.map((item: any) => <GridItem key={item.id} item={item} onPress={() => onPressItem(item)} />);
 
   return (
     <View style={styles.wrapper}>
@@ -26,7 +28,7 @@ const WardrobeGrid = (props: any) => {
         style={styles.scroll}
       >
         <View style={styles.container}>
-          <AddItem navigation={navigation}/>
+          {addItem && <AddItem onPress={onPressAddItem}/>}
           {content}
         </View>
       </ScrollView>
