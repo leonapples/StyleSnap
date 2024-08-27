@@ -17,6 +17,7 @@ const ItemDetailsPage = (props: any) => {
 
   const [itemLocal, setItemLocal] = useState(route.params?.item);
   const newItem = route.params?.newItem;
+  const editable = route.params?.editable;
 
   const onChange = (name: any, value: any) => {
     setItemLocal({ ...itemLocal, [name]: value });
@@ -24,14 +25,14 @@ const ItemDetailsPage = (props: any) => {
 
   return (
     <PageContainer paddingTop={20}>
-      <ItemPopUpHeader item={itemLocal} navigation={navigation} onChangeText={(value: any) => onChange("name", value)} />
+      <ItemPopUpHeader newItem={newItem} editable={editable} item={itemLocal} navigation={navigation} onChangeText={(value: any) => onChange("name", value)} />
       <ScrollView contentContainerStyle={styles.scrollContent} style={styles.scroll}>
-        <Picture picture={itemLocal?.imageUrl} setPicture={(value: any) => onChange("imageUrl", value)}/>
-        <InputField value={itemLocal?.brand} onChangeText={(value: any) => onChange("brand", value)} fieldName="Brand"/>
-        <InputField value={itemLocal?.price} onChangeText={(value: any) => onChange("price", value)} fieldName="Price"/>
-        <InputField height={200} multiline={true} value={itemLocal?.notes} onChangeText={(value: any) => onChange("notes", value)} fieldName="Notes"/>
+        <Picture editable={editable} picture={itemLocal?.imageUrl} setPicture={(value: any) => onChange("imageUrl", value)}/>
+        <InputField editable={editable} value={itemLocal?.brand} onChangeText={(value: any) => onChange("brand", value)} fieldName="Brand"/>
+        <InputField editable={editable} value={itemLocal?.price} onChangeText={(value: any) => onChange("price", value)} fieldName="Price"/>
+        <InputField editable={editable} height={200} multiline={true} value={itemLocal?.notes} onChangeText={(value: any) => onChange("notes", value)} fieldName="Notes"/>
       </ScrollView>
-      <TouchableOpacity
+      { editable && <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
         onPress={() => {
@@ -42,7 +43,7 @@ const ItemDetailsPage = (props: any) => {
         <Text style={styles.text}>
           { newItem ? 'ADD ITEM' : 'UPDATE ITEM' }
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> }
     </PageContainer>
   );
 };

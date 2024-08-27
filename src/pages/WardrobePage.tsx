@@ -14,8 +14,8 @@ const WardrobePage = (props: { navigation: any; }) => {
     <PageContainer>
       <MainHeader text="YOUR WARDROBE" />
       <WardrobeGrid 
-        onPressItem={(item: any) => navigation.navigate('ItemDetailsPage', { item, newItem: false })}
-        onPressAddItem={() => navigation.navigate('ItemDetailsPage', { newItem: true })}
+        onPressItem={(item: any) => navigation.navigate('ItemDetailsPage', { item, newItem: false, editable: true })}
+        onPressAddItem={() => navigation.navigate('ItemDetailsPage', { newItem: true, editable: true })}
       />
     </PageContainer>
   );

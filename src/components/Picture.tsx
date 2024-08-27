@@ -9,6 +9,7 @@ const Picture = (props: any) => {
   const {
     picture,
     setPicture,
+    editable,
   } = props;
 
   const cameraRef = useRef<any>(null);
@@ -40,10 +41,10 @@ const Picture = (props: any) => {
       <View style={styles.cameraContainer}>
         {picture ? 
           <Image source={{ uri: picture }} style={styles.camera} /> : 
-          <CameraView style={styles.camera} facing={front ? 'front' : 'back'} ref={cameraRef} /> 
+          editable ? <CameraView style={styles.camera} facing={front ? 'front' : 'back'} ref={cameraRef} /> : null
         }
       </View>
-      <View style={styles.buttons}>
+      { editable && <View style={styles.buttons}>
         { !picture && <TouchableOpacity
           onPress={() => setFront(!front)}
         >
@@ -75,7 +76,7 @@ const Picture = (props: any) => {
             />
           }
         </TouchableOpacity>
-      </View>
+      </View> }
     </View>
   )
 };

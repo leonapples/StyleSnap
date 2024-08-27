@@ -19,14 +19,10 @@ const MannequinItem = (props: any) => {
   const item = items.find((item: any) => item.id === itemId);
 
   const onPress = () => {
-    if (!editable) {
-      return;
-    }
-
     if (item) {
-      navigation.navigate('ItemDetailsPage', { item, newItem: false })
+      navigation.navigate('ItemDetailsPage', { item, newItem: false, editable: false })
     }
-    else {
+    else if (editable) {
       navigation.navigate('WardrobePopupPage', { name, key: keyId });
     }
   }
@@ -72,7 +68,7 @@ const MannequinItem = (props: any) => {
 
   return (
     <View style={styles.container}>
-      { item &&<TouchableOpacity style={styles.remove}>
+      { item && editable && <TouchableOpacity style={styles.remove}>
         <Icon
           name='close'
           type='material'
@@ -93,7 +89,7 @@ const MannequinItem = (props: any) => {
           }}
           style={styles.image}
         /> :
-        <Text style={styles.text}> {item ? item?.name || 'NO IMAGE' : 'ADD +'} </Text>}
+        <Text style={styles.text}> {item ? item?.name || 'NO IMAGE' : editable && 'ADD +'} </Text>}
       </TouchableOpacity>
       <Text
         style={styles.text}

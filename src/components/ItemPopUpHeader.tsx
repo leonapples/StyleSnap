@@ -10,6 +10,8 @@ const ItemPopUpHeader = (props: any) => {
     item,
     navigation,
     onChangeText,
+    editable,
+    newItem,
   } = props;
 
   const { deleteItem } = useData();
@@ -26,7 +28,9 @@ const ItemPopUpHeader = (props: any) => {
         {
           text: 'Delete',
           onPress: async () => {
-            await FileSystem.deleteAsync(item.imageUrl);
+            if (item?.imageUrl) {
+              await FileSystem.deleteAsync(item.imageUrl);
+            }
             await deleteItem(item.id);
             navigation.goBack();
           },
@@ -52,15 +56,16 @@ const ItemPopUpHeader = (props: any) => {
         value={item?.name}
         onChangeText={onChangeText}
         placeholder="NEW ITEM"
+        editable={editable}
       /> 
-      <Icon
+      {!newItem &&editable && <Icon
         name='delete'
         type='material'
         color={colors.foreground}
         size={35}
         containerStyle={styles.deleteIcon}
         onPress={deleteOnPress}
-      />
+      />}
     </>
   );
 };
@@ -78,7 +83,7 @@ const styles = StyleSheet.create({
     color: colors.foreground, 
     fontSize: 24, 
     fontWeight: '400', 
-    letterSpacing: 7,
+    letterSpacing: 2,
     paddingTop: 5,
     marginBottom: 20,
   },

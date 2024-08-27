@@ -20,6 +20,8 @@ const DataProvider = (props: any) => {
 
   const [items, setItems] = useState<any>([]);
   const [outfits, setOutfits] = useState<any>([]);
+  console.log('Items', items);
+  console.log('Outfits', outfits);
 
   const setUpDB = async () => {
     try {

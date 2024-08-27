@@ -8,6 +8,7 @@ const InputField = (props: any) => {
     multiline,
     fieldName,
     onChangeText,
+    editable,
     value,
   } = props;
 
@@ -54,6 +55,7 @@ const InputField = (props: any) => {
         onChangeText={onChangeText}
         value={value}
         multiline={multiline}
+        editable={editable}
       />
     </View>
   );

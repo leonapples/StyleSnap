@@ -5,19 +5,30 @@ import PageContainer from '../components/PageContainer';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CalendarList } from 'react-native-calendars';
 import { colors } from '../utils/constants';
-import { textTransform } from '@mui/system';
+import { useData } from '../components/DataProvider';
+import getDate from '../utils/date';
 
 const MemoriesPage = (props: { navigation: any; }) => {
   const {
     navigation
   } = props;
 
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-  const day = String(date.getDate()).padStart(2, '0');
-  const today = `${year}-${month}-${day}`;
-  
+  const today = getDate();
+  const { outfits } = useData();
+
+  const outfitDays = outfits.reduce((acc, outfit) => {
+    acc[outfit.date] = { marked: true, dotColor: colors.accent };
+    return acc;
+  }, {});
+
+  const onPress = (day: any) => {
+    // if (day.dateString === today) {
+    //   navigation.navigate('TodayPage');
+    // } else {
+      navigation.navigate('OutfitPage', { date: day.dateString });
+    // }
+  };
+
   return (
     <PageContainer>
       <MainHeader text="DAILY MEMORIES" />
@@ -26,7 +37,9 @@ const MemoriesPage = (props: { navigation: any; }) => {
         style={styles.topGradient}
       />
       <CalendarList 
+        onDayPress={onPress}
         markedDates={{
+          ...outfitDays,
           [today]: {
             customStyles: {
               text: {
@@ -34,7 +47,7 @@ const MemoriesPage = (props: { navigation: any; }) => {
                 color: colors.foreground,
               }
             }
-          }
+          },
         }}
         theme={{
           backgroundColor: colors.background,
