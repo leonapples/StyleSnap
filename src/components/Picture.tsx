@@ -1,84 +1,137 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import { CameraView, Camera } from 'expo-camera';
+import { CameraView } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 import { colors } from '../utils/constants';
 
-const Picture = (props: any) => {
-  const {
-    picture,
-    setPicture,
-    editable,
-  } = props;
+interface PictureProps {
+  // url of the image to be displayed. if null, the camera will be displayed
+  imageUrl?: string | null;
 
-  const cameraRef = useRef<any>(null);
-  const [front, setFront] = useState(false);
+  // function that sets the url of the image
+  setImageUrl: (url: string | null) => void;
+
+  // whether or not the image can be edited
+  editable: boolean;
+}
+
+/**
+ * Component that covers functionality related to taking and displaying an image (picture)
+ * of a given clothing item.
+ *
+ * @component
+ * @param props {PictureProps}
+ * @returns {JSX.Element} the Picture component.
+ * @example
+ * return (
+ *   <Picture editable={true} imageUrl={imageUrl} setImageUrl={setImageUrl}/>
+ * )
+ */
+const Picture = (props: PictureProps): JSX.Element => {
+  const { imageUrl = null, setImageUrl, editable } = props;
+
+  const cameraRef = useRef<CameraView>();
+  const [isFront, setIsFront] = useState(false);
 
   const takePic = async () => {
     if (cameraRef.current) {
       try {
         const photo = await cameraRef.current.takePictureAsync();
-        const uri = `${FileSystem.documentDirectory}${photo.uri.split('/').pop()}`;
-        await FileSystem.moveAsync({
-          from: photo.uri,
-          to: uri,
-        });
-        setPicture(uri);
+        let uri: string | null = null;
+        if (photo) {
+          uri = `${FileSystem.documentDirectory}${photo.uri.split('/').pop()}`;
+          await FileSystem.moveAsync({
+            from: photo?.uri,
+            to: uri,
+          });
+        }
+        setImageUrl(uri);
       } catch (error) {
         console.log(error);
       }
     }
-  }
-
-  const deletePic = async () => {
-    await FileSystem.deleteAsync(picture);
-    setPicture(null);
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.cameraContainer}>
-        {picture ? 
-          <Image source={{ uri: picture }} style={styles.camera} /> : 
-          editable ? <CameraView style={styles.camera} facing={front ? 'front' : 'back'} ref={cameraRef} /> : null
-        }
-      </View>
-      { editable && <View style={styles.buttons}>
-        { !picture && <TouchableOpacity
-          onPress={() => setFront(!front)}
-        >
-          <Icon
-            name='cameraswitch'
-            type='material'
-            size={35}
-            color={colors.accent}
-            style={styles.icon}
+  const deletePic = async () => {
+    setImageUrl(null);
+  };
+
+  const Display = useMemo(() => {
+    if (imageUrl) {
+      return <Image source={{ uri: imageUrl }} style={styles.camera} />;
+    } else {
+      if (editable) {
+        return (
+          <CameraView
+            style={styles.camera}
+            facing={isFront ? 'front' : 'back'}
+            // @ts-expect-error - CameraView does not accept a ref
+            ref={cameraRef}
           />
-        </TouchableOpacity> }
-        <TouchableOpacity
-          onPress={picture ? deletePic : takePic}
-        >
-          {picture ? 
+        );
+      } else {
+        return null;
+      }
+    }
+  }, [imageUrl, editable, isFront]);
+
+  const Buttons = useMemo(() => {
+    let buttonList;
+
+    if (!imageUrl) {
+      buttonList = (
+        <>
+          <TouchableOpacity
+            key="switchCamera"
+            onPress={() => setIsFront(!isFront)}
+          >
             <Icon
-              name='replay'
-              type='material'
-              size={35}
-              color={colors.accent}
-              style={styles.icon}
-            /> :
-            <Icon
-              name='camera'
-              type='font-awesome'
+              name="cameraswitch"
+              type="material"
               size={35}
               color={colors.accent}
               style={styles.icon}
             />
-          }
+          </TouchableOpacity>
+          <TouchableOpacity key="takePic" onPress={takePic}>
+            <Icon
+              name="camera"
+              type="font-awesome"
+              size={35}
+              color={colors.accent}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </>
+      );
+    } else {
+      buttonList = (
+        <TouchableOpacity key="redoPic" onPress={deletePic}>
+          <Icon
+            name="replay"
+            type="material"
+            size={35}
+            color={colors.accent}
+            style={styles.icon}
+          />
         </TouchableOpacity>
-      </View> }
+      );
+    }
+
+    if (editable) {
+      return <View style={styles.buttons}>{buttonList}</View>;
+    } else {
+      return null;
+    }
+  }, [imageUrl, editable, isFront, takePic, deletePic]);
+
+  return (
+    <View style={styles.container}>
+      {Display}
+      {Buttons}
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -86,15 +139,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cameraContainer: {
-    marginTop: 20,
-    width: '80%', 
+  camera: {
     borderRadius: 30,
     overflow: 'hidden',
+    marginTop: 20,
+    width: '80%',
     aspectRatio: 1,
-  },
-  camera: {
-    flex: 1,
   },
   buttons: {
     width: '80%',
@@ -103,7 +153,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginTop: 15,
-  }
+  },
 });
 
 export default memo(Picture);

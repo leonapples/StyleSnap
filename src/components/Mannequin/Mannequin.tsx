@@ -1,37 +1,110 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, Image, View, Dimensions } from 'react-native';
 import MannequinItem from './MannequinItem';
+import { Outfit } from '../../utils/schemas';
+import {
+  MemoriesStackParamList,
+  TodayStackParamList,
+} from '../../utils/navigatorTypes';
+import { NavigationProp } from '@react-navigation/native';
 
-const Mannequin = (props: any) => {
-  const {
-    outfit = {},
-    editable,
-    navigation = {},
-  } = props;
+interface MannequinProps {
+  // Outfit to display
+  outfit?: Outfit;
+
+  // Whether this is today's outfit - today's outfit is editable
+  today: boolean;
+
+  // Navigation object
+  navigation:
+    | NavigationProp<TodayStackParamList, 'TodayPage'>
+    | NavigationProp<MemoriesStackParamList, 'OutfitPage'>;
+}
+
+/**
+ * Mannequin component that displays an outfit, as well as allows editing of today's outfit.
+ *
+ * @component
+ * @param props {MannequinProps}
+ * @returns {JSX.Element} the Mannequin component.
+ */
+const Mannequin = (props: MannequinProps): JSX.Element => {
+  const { outfit = {}, today, navigation } = props;
 
   return (
     <View style={styles.container}>
-      <Image style={styles.mannequin} source={require('../../assets/mannequin.png')} />
+      <Image
+        style={styles.mannequin}
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        source={require('../../assets/mannequin.png')}
+      />
       <View style={styles.columnContainer}>
         <View style={styles.column}>
-          <MannequinItem name="outerwear" outfit={outfit} editable={editable} navigation={navigation}/>
-          <MannequinItem name="fragrance" outfit={outfit} editable={editable} navigation={navigation}/>
+          <MannequinItem
+            category="outerwear"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
+          <MannequinItem
+            category="fragrance"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
         </View>
         <View style={styles.column}>
-          <MannequinItem name="headwear" outfit={outfit} editable={editable} navigation={navigation}/>
-          <MannequinItem name="top" outfit={outfit} editable={editable} navigation={navigation}/>
-          <MannequinItem name="bottom" outfit={outfit} editable={editable} navigation={navigation}/>
-          <MannequinItem name="footwear" outfit={outfit} editable={editable} navigation={navigation}/>
+          <MannequinItem
+            category="headwear"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
+          <MannequinItem
+            category="top"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
+          <MannequinItem
+            category="bottom"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
+          <MannequinItem
+            category="footwear"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
         </View>
         <View style={styles.column}>
-          <MannequinItem name="accessory" keyId="accessory1" outfit={outfit} editable={editable} navigation={navigation}/>
-          <MannequinItem name="accessory" keyId="accessory2" outfit={outfit} editable={editable} navigation={navigation}/>
-          <MannequinItem name="accessory" keyId="accessory3" outfit={outfit} editable={editable} navigation={navigation}/>
+          <MannequinItem
+            category="accessory"
+            keyId="accessory1"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
+          <MannequinItem
+            category="accessory"
+            keyId="accessory2"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
+          <MannequinItem
+            category="accessory"
+            keyId="accessory3"
+            outfit={outfit}
+            today={today}
+            navigation={navigation}
+          />
         </View>
       </View>
     </View>
   );
-
 };
 
 const styles = StyleSheet.create({
@@ -46,7 +119,7 @@ const styles = StyleSheet.create({
     bottom: '10%',
     transform: [{ translateX: -Dimensions.get('window').width / 4 }],
     width: '50%',
-    opacity: 0.1, 
+    opacity: 0.1,
     resizeMode: 'contain',
   },
   columnContainer: {

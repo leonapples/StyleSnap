@@ -5,17 +5,47 @@ import GridItem from './GridItem';
 import AddItem from './AddItem';
 import { useData } from '../DataProvider';
 import { colors } from '../../utils/constants';
+import { ExistingClothingItem } from '../../utils/schemas';
 
-const WardrobeGrid = (props: any) => {
+interface WardrobeGridProps {
+  // Whether to show the Add Item tile
+  addItem?: boolean;
+
+  // Callback for when an item tile is pressed
+  onPressItem?: (item: ExistingClothingItem) => void;
+
+  // Callback for when Add Item tile is pressed
+  onPressAddItem?: () => void;
+}
+
+/**
+ * Component that pulls data for all items in the user's Wardrobe from the database, and
+ * displays them in a scrollable grid.
+ *
+ * @component
+ * @param props {WardrobeGridProps}
+ * @returns {JSX.Element} the WardrobeGrid component.
+ * @example
+ * returns (
+ *  <WardrobeGrid
+ *    addItem={true}
+ *    onPressItem={onPressItem}
+ *    onPressAddItem={onPressAddItem}
+ *  />
+ * )
+ */
+const WardrobeGrid = (props: WardrobeGridProps): JSX.Element => {
   const {
     addItem = true,
-    onPressItem,
-    onPressAddItem,
+    onPressItem = () => {},
+    onPressAddItem = () => {},
   } = props;
 
   const { items } = useData();
-  
-  const content = items.map((item: any) => <GridItem key={item.id} item={item} onPress={() => onPressItem(item)} />);
+
+  const content = items.map((item: ExistingClothingItem) => (
+    <GridItem key={item.id} item={item} onPress={() => onPressItem(item)} />
+  ));
 
   return (
     <View style={styles.wrapper}>
@@ -23,18 +53,15 @@ const WardrobeGrid = (props: any) => {
         colors={[colors.background + 'FF', colors.background + '00']}
         style={styles.topGradient}
       />
-      <ScrollView 
-        showsVerticalScrollIndicator={false} 
-        style={styles.scroll}
-      >
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
         <View style={styles.container}>
-          {addItem && <AddItem onPress={onPressAddItem}/>}
+          {addItem && <AddItem onPress={onPressAddItem} />}
           {content}
         </View>
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -59,6 +86,6 @@ const styles = StyleSheet.create({
     height: 25,
     zIndex: 1,
   },
-})
+});
 
 export default memo(WardrobeGrid);

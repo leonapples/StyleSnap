@@ -1,32 +1,51 @@
 import React, { memo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import MainHeader from '../components/MainHeader';
 import PageContainer from '../components/PageContainer';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CalendarList } from 'react-native-calendars';
+import { CalendarList, DateData } from 'react-native-calendars';
 import { colors } from '../utils/constants';
 import { useData } from '../components/DataProvider';
+import { Outfit } from '../utils/schemas';
 import getDate from '../utils/date';
+import { MemoriesStackParamList } from '../utils/navigatorTypes';
+import { NavigationProp } from '@react-navigation/native';
 
-const MemoriesPage = (props: { navigation: any; }) => {
-  const {
-    navigation
-  } = props;
+interface MemoriesPageProps {
+  navigation: NavigationProp<MemoriesStackParamList, 'MemoriesPage'>;
+}
+
+/**
+ * Home page in the MemoriesTab stack that displays the user's calendar of past outfits.
+ *
+ * @component
+ * @param props {MemoriesPageProps}
+ * @returns {JSX.Element} the MemoriesPage component.
+ * @example
+ * <Stack.Screen name="MemoriesPage" component={MemoriesPage} />
+ */
+const MemoriesPage = (props: MemoriesPageProps) => {
+  const { navigation } = props;
 
   const today = getDate();
   const { outfits } = useData();
 
-  const outfitDays = outfits.reduce((acc, outfit) => {
-    acc[outfit.date] = { marked: true, dotColor: colors.accent };
-    return acc;
-  }, {});
+  // Mark days that have outfits
+  const outfitDays = outfits.reduce(
+    (
+      acc: { [key: string]: { marked: boolean; dotColor: string } },
+      outfit: Outfit,
+    ) => {
+      if (outfit.date) {
+        acc[outfit.date] = { marked: true, dotColor: colors.accent };
+      }
+      return acc;
+    },
+    {},
+  );
 
-  const onPress = (day: any) => {
-    // if (day.dateString === today) {
-    //   navigation.navigate('TodayPage');
-    // } else {
-      navigation.navigate('OutfitPage', { date: day.dateString });
-    // }
+  const onPress = (day: DateData) => {
+    navigation.navigate('OutfitPage', { date: day.dateString });
   };
 
   return (
@@ -36,7 +55,7 @@ const MemoriesPage = (props: { navigation: any; }) => {
         colors={[colors.background + 'FF', colors.background + '00']}
         style={styles.topGradient}
       />
-      <CalendarList 
+      <CalendarList
         onDayPress={onPress}
         markedDates={{
           ...outfitDays,
@@ -45,8 +64,8 @@ const MemoriesPage = (props: { navigation: any; }) => {
               text: {
                 fontWeight: 'bold',
                 color: colors.foreground,
-              }
-            }
+              },
+            },
           },
         }}
         theme={{
@@ -71,14 +90,14 @@ const MemoriesPage = (props: { navigation: any; }) => {
               fontWeight: '400',
               letterSpacing: 4,
               color: colors.foreground,
-            }
+            },
           },
         }}
         markingType="custom"
       />
     </PageContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
   topGradient: {
@@ -89,6 +108,6 @@ const styles = StyleSheet.create({
     height: 25,
     zIndex: 1,
   },
-})
+});
 
 export default memo(MemoriesPage);

@@ -1,14 +1,20 @@
 import { Camera } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
 
-let cameraPermission;
-let mediaLibraryPermission;
+// Boolean representing whether the user has granted camera permissions
+let cameraPermission: boolean;
 
-const getPermissions = async () => {
+/**
+ * Requests camera permissions from the user, and sets the cameraPermission boolean based
+ * on the user's response.
+ *
+ * @return {Promise<void>}
+ * @example
+ * await getPermissions();
+ * console.log(cameraPermission);
+ */
+const getPermissions = async (): Promise<void> => {
   const cameraStatus = await Camera.requestCameraPermissionsAsync();
   cameraPermission = cameraStatus.status === 'granted';
-  const mediaLibraryStatus = await MediaLibrary.requestPermissionsAsync();
-  mediaLibraryPermission = mediaLibraryStatus.status === 'granted';
 };
 
-export { cameraPermission, mediaLibraryPermission, getPermissions };
+export { cameraPermission, getPermissions };

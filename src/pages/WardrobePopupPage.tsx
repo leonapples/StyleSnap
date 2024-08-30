@@ -1,41 +1,55 @@
-import React, { memo, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Text } from 'react-native';
+import React, { memo } from 'react';
+import { StyleSheet, Text } from 'react-native';
 import PageContainer from '../components/PageContainer';
 import { useData } from '../components/DataProvider';
 import { colors } from '../utils/constants';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 import WardrobeGrid from '../components/WardrobeGrid';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { TodayStackParamList } from '../utils/navigatorTypes';
+import { ExistingClothingItem } from '../utils/schemas';
 
-const WardrobePopupPage = (props: any) => {
-  const {
-    navigation,
-    route,
-  } = props;
+interface WardrobePopupPageProps {
+  route: RouteProp<TodayStackParamList, 'WardrobePopupPage'>;
+  navigation: NavigationProp<TodayStackParamList, 'WardrobePopupPage'>;
+}
+
+/**
+ * Modal that displays the user's wardrobe and allows them to select an item
+ * to add to the outfit of the day.
+ *
+ * @component
+ * @param props {WardrobePopupPageProps}
+ * @returns {JSX.Element} the WardrobePopupPage component.
+ * @example
+ * <Stack.Screen name="WardrobePopupPage" component={WardrobePopupPage} options={{ presentation: 'modal' }}/>
+ */
+const WardrobePopupPage = (props: WardrobePopupPageProps): JSX.Element => {
+  const { navigation, route } = props;
 
   const { updateTodaysOutfit } = useData();
+  const { category, key } = route.params;
+  if (!category) {
+    navigation.goBack();
+  }
 
-  const { name, key } = route.params;
-
-  const onPressItem = async (item: any) => {
-    await updateTodaysOutfit(key || name, item?.id);
+  const onPressItem = async (item: ExistingClothingItem) => {
+    await updateTodaysOutfit(key || category, item.id);
     navigation.goBack();
   };
 
   return (
     <PageContainer paddingTop={20}>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.text}>{category}</Text>
       <Icon
-        name='close'
-        type='material'
+        name="close"
+        type="material"
         color={colors.foreground}
         size={35}
         containerStyle={styles.exitIcon}
         onPress={() => navigation.goBack()}
       />
-      <WardrobeGrid 
-        addItem={false}
-        onPressItem={onPressItem}
-      />
+      <WardrobeGrid addItem={false} onPressItem={onPressItem} />
     </PageContainer>
   );
 };
@@ -43,11 +57,11 @@ const WardrobePopupPage = (props: any) => {
 const styles = StyleSheet.create({
   text: {
     width: 239,
-    height: 28, 
-    textAlign: 'center', 
-    color: colors.foreground, 
-    fontSize: 24, 
-    fontWeight: '400', 
+    height: 28,
+    textAlign: 'center',
+    color: colors.foreground,
+    fontSize: 24,
+    fontWeight: '400',
     letterSpacing: 7,
     paddingTop: 5,
     marginBottom: 20,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState  } from 'react';
+import React, { useEffect, useState } from 'react';
 import LoadingScreen from './src/pages/LoadingScreen';
 import AppRoot from './src/AppRoot';
 import { getPermissions } from './src/utils/camera';
@@ -16,7 +16,5 @@ export default function App() {
     prepare();
   }, []);
 
-  return (
-    appIsReady ? <AppRoot /> : <LoadingScreen /> 
-  );
+  return appIsReady ? <AppRoot /> : <LoadingScreen />;
 }
